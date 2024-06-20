@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate product prices</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="body-style">
+    <div class="container">
+        <h1 class="main-heading">Compare the prices of Power.fi and Gigantti.fi</h1>
+        <input type="text" id="search-input" class="search-input" placeholder="Search for a product..">
+        <button onclick="submitSearch()">Submit</button>
+        <div id="results" class="results">
+            <div id="power-price" class="price-box power-price"></div>
+            <div id="gigantti-price" class="price-box gigantti-price"></div>
+        </div>
+    </div>
+    <script>
+        async function submitSearch() {
+            const query = document.getElementById('search-input').value;
+            const response = await fetch(`/search?query=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            document.getElementById('power-price').innerHTML = `<b>Power.fi:</b><br>${data.power.product}<br><b>${data.power.price}€</b>`;
+            document.getElementById('gigantti-price').innerHTML = `<b>Gigantti.fi:</b><br>${data.gigantti.product}<br><b>${data.gigantti.price}</b>`;
+        }
+    </script>
+</body>
+</html>
